@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>KisanCart — Fresh Vegetables Delivered</title>
+<meta name="theme-color" content="#1E7A3D">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="splash-wrap">
+  <div class="emoji-logo">🥬</div>
+  <h1><b>Kisan</b><i>Cart</i></h1>
+  <p class="tagline">Fresh Vegetables Delivered to Your Doorstep</p>
+  <div class="loader"><span></span></div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  setTimeout(function () {
+    const loggedIn = localStorage.getItem("kisancart_logged_in");
+    window.location.href = loggedIn ? "home.html" : "login.html";
+  }, 1800);
+</script>
+</body>
+</html>

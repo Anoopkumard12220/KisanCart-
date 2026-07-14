@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Login — KisanCart</title>
+<meta name="theme-color" content="#1E7A3D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ================= STEP 1: MOBILE NUMBER ================= -->
+  <div id="step-mobile" class="page">
+    <div class="login-hero">
+      <div class="emoji-logo">🥬</div>
+      <h2><span style="color:var(--green)">Kisan</span><span style="color:var(--orange)">Cart</span></h2>
+      <p>Fresh Vegetables &amp; Fruits Delivered to Your Home</p>
+    </div>
+
+    <div class="login-card">
+      <h3>Login / Register</h3>
+      <p class="sub">Enter your mobile number to continue</p>
+
+      <div class="field">
+        <label>Mobile Number</label>
+        <div class="input-row">
+          <span class="prefix">🇮🇳 +91</span>
+          <input type="tel" id="mobile-input" maxlength="10" placeholder="Enter Mobile Number" inputmode="numeric">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="get-otp-btn">Get OTP →</button>
+
+      <div class="divider-or">or continue with</div>
+      <div class="social-row">
+        <button class="social-btn" onclick="toast('Demo only — Google login simulated','🔵')">🔵 Google</button>
+        <button class="social-btn" onclick="toast('Demo only — WhatsApp login simulated','🟢')">🟢 WhatsApp</button>
+        <button class="social-btn" onclick="toast('Demo only — Apple login simulated','⚪')"></button>
+      </div>
+
+      <div class="trust-note">🔒 Your data is safe &amp; secure with us</div>
+    </div>
+
+    <ul class="feature-list">
+      <li>🌿 <b>100% Fresh &amp; Natural</b> — handpicked daily</li>
+      <li>🚚 <b>On-Time Delivery</b> — right to your doorstep</li>
+      <li>💰 <b>Best Price Guarantee</b> — direct from farmers</li>
+    </ul>
+    <div class="app-footer-credit">Developed by <b>CodeNova Studio</b> · Founded by Anoop Dubey</div>
+  </div>
+
+  <!-- ================= STEP 2: OTP VERIFY ================= -->
+  <div id="step-otp" class="page" style="display:none;">
+    <div class="topbar">
+      <button class="back-btn" onclick="goBackToMobile()">←</button>
+      <h1>Verify OTP</h1>
+    </div>
+    <div style="padding:26px 22px;">
+      <p style="font-size:13.5px;color:var(--text-soft);margin-bottom:22px;">
+        Enter the 4-digit OTP sent to <b id="otp-mobile-display" style="color:var(--text)">+91 XXXXXXXXXX</b>
+        &nbsp;<a href="#" onclick="goBackToMobile();return false;" style="color:var(--green);font-weight:600;">Change</a>
+      </p>
+      <div class="otp-boxes">
+        <input type="tel" maxlength="1" class="otp-box">
+        <input type="tel" maxlength="1" class="otp-box">
+        <input type="tel" maxlength="1" class="otp-box">
+        <input type="tel" maxlength="1" class="otp-box">
+      </div>
+      <p style="font-size:11.5px;color:var(--gray-500);margin:14px 0 22px;">Demo mode — any 4 digits will work. (No real OTP is sent.)</p>
+      <button class="btn btn-primary" id="verify-otp-btn">Verify &amp; Continue</button>
+      <button class="btn btn-ghost" style="margin-top:12px;" onclick="toast('OTP resent (demo)','📩')">Resend OTP</button>
+    </div>
+  </div>
+
+  <!-- ================= STEP 3: REGISTRATION ================= -->
+  <div id="step-register" class="page" style="display:none;">
+    <div class="topbar">
+      <h1>Complete Your Profile</h1>
+    </div>
+    <div style="padding:22px;">
+      <p style="font-size:13px;color:var(--text-soft);margin-bottom:20px;">Just a few details so we can deliver fresh veggies right to you 🌿</p>
+
+      <div class="field">
+        <label>Full Name</label>
+        <div class="input-row"><input type="text" id="reg-name" placeholder="e.g. Rahul Sharma"></div>
+      </div>
+      <div class="field">
+        <label>Mobile Number</label>
+        <div class="input-row"><input type="text" id="reg-mobile" disabled></div>
+      </div>
+      <div class="field">
+        <label>Delivery Area</label>
+        <div class="input-row">
+          <select id="reg-area">
+            <option>Mahmoorganj, Varanasi</option>
+            <option>Sigra, Varanasi</option>
+            <option>Lanka, Varanasi</option>
+            <option>Bhelupur, Varanasi</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Full Address</label>
+        <div class="input-row"><input type="text" id="reg-address" placeholder="House no, Street, Landmark"></div>
+      </div>
+
+      <button class="btn btn-primary" id="save-profile-btn">Save &amp; Start Shopping</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+  const mobileInput = document.getElementById("mobile-input");
+  const getOtpBtn = document.getElementById("get-otp-btn");
+  const stepMobile = document.getElementById("step-mobile");
+  const stepOtp = document.getElementById("step-otp");
+  const stepRegister = document.getElementById("step-register");
+
+  mobileInput.addEventListener("input", () => {
+    mobileInput.value = mobileInput.value.replace(/\D/g,"").slice(0,10);
+  });
+
+  getOtpBtn.addEventListener("click", () => {
+    if (mobileInput.value.length !== 10) {
+      toast("Enter a valid 10-digit mobile number", "⚠️");
+      return;
+    }
+    document.getElementById("otp-mobile-display").textContent = "+91 " + mobileInput.value;
+    stepMobile.style.display = "none";
+    stepOtp.style.display = "block";
+    setTimeout(() => document.querySelector(".otp-box").focus(), 100);
+  });
+
+  function goBackToMobile() {
+    stepOtp.style.display = "none";
+    stepMobile.style.display = "block";
+  }
+
+  // OTP auto-advance
+  const otpBoxes = document.querySelectorAll(".otp-box");
+  otpBoxes.forEach((box, i) => {
+    box.addEventListener("input", () => {
+      box.value = box.value.replace(/\D/g,"");
+      if (box.value && i < otpBoxes.length - 1) otpBoxes[i+1].focus();
+    });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !box.value && i > 0) otpBoxes[i-1].focus();
+    });
+  });
+
+  document.getElementById("verify-otp-btn").addEventListener("click", () => {
+    const filled = Array.from(otpBoxes).every(b => b.value.length === 1);
+    if (!filled) { toast("Enter all 4 digits","⚠️"); return; }
+
+    toast("OTP verified!", "✅");
+    const isNewUser = !localStorage.getItem("kisancart_profile");
+
+    setTimeout(() => {
+      if (isNewUser) {
+        stepOtp.style.display = "none";
+        stepRegister.style.display = "block";
+        document.getElementById("reg-mobile").value = "+91 " + mobileInput.value;
+      } else {
+        localStorage.setItem("kisancart_logged_in", "1");
+        window.location.href = "home.html";
+      }
+    }, 600);
+  });
+
+  document.getElementById("save-profile-btn").addEventListener("click", () => {
+    const name = document.getElementById("reg-name").value.trim();
+    if (!name) { toast("Please enter your name","⚠️"); return; }
+    const profile = {
+      name,
+      mobile: document.getElementById("reg-mobile").value,
+      area: document.getElementById("reg-area").value,
+      address: document.getElementById("reg-address").value || "House details not added"
+    };
+    localStorage.setItem("kisancart_profile", JSON.stringify(profile));
+    localStorage.setItem("kisancart_logged_in", "1");
+    toast("Profile saved!", "✅");
+    setTimeout(() => window.location.href = "home.html", 500);
+  });
+</script>
+</body>
+</html>
